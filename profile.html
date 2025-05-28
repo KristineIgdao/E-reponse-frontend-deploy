@@ -35,7 +35,7 @@
 
   <main class="profile-container">
     <div class="profile-image-container">
-      <img src=".\images\profile1.jpg" alt="Profile Picture" class="profile-image" />
+      <img src="./images/profile1.jpg" alt="Profile Picture" class="profile-image" />
       <h2 style="color: #c9302c;">User Profile</h2>
     </div>
 
@@ -45,6 +45,7 @@
 
     <div class="button-group">
       <button id="edit-btn" class="edit-btn">Edit</button>
+      <button id="logout-btn" class="logout-btn">Log Out</button>
       <button id="save-btn" class="save-btn" style="display: none;">Save</button>
       <button id="cancel-btn" class="cancel-btn" style="display: none;">Cancel</button>
     </div>
@@ -55,6 +56,7 @@
     const editBtn = document.getElementById('edit-btn');
     const saveBtn = document.getElementById('save-btn');
     const cancelBtn = document.getElementById('cancel-btn');
+    const logoutInlineBtn = document.getElementById('logout-btn');
     const buttonGroup = document.querySelector('.button-group');
 
     const userData = JSON.parse(localStorage.getItem('user_data'));
@@ -94,6 +96,7 @@
     editBtn.addEventListener('click', () => {
       renderProfile(userData, true);
       editBtn.style.display = "none";
+      logoutInlineBtn.style.display = "none";
       saveBtn.style.display = "inline-block";
       cancelBtn.style.display = "inline-block";
     });
@@ -112,6 +115,7 @@
       localStorage.setItem('user_data', JSON.stringify(userData));
       renderProfile(userData, false);
       editBtn.style.display = "inline-block";
+      logoutInlineBtn.style.display = "inline-block";
       saveBtn.style.display = "none";
       cancelBtn.style.display = "none";
     });
@@ -119,47 +123,31 @@
     cancelBtn.addEventListener('click', () => {
       renderProfile(userData, false);
       editBtn.style.display = "inline-block";
+      logoutInlineBtn.style.display = "inline-block";
       saveBtn.style.display = "none";
       cancelBtn.style.display = "none";
     });
-  </script>
 
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const logoutButton = document.querySelector('.logout-btn');
-
-    // Handle logout
-    if (logoutButton) {
-      logoutButton.addEventListener('click', function(event) {
+    // Handle both logout buttons
+    document.querySelectorAll('.logout-btn, #logout-btn').forEach(btn => {
+      btn.addEventListener('click', function(event) {
         event.preventDefault();
-        // Update login state
         localStorage.setItem('isLoggedIn', 'false');
-        // Broadcast logout event
         localStorage.setItem('logout-event', Date.now());
-        // Redirect to login
         window.location.href = 'login.html';
       });
-    }
+    });
 
-    // Listen for storage events (login/logout across tabs)
     window.addEventListener('storage', function(event) {
       if (event.key === 'logout-event') {
-        // Another tab logged out
         window.location.href = 'login.html';
-      }
-      if (event.key === 'login-event') {
-        // Another tab logged in
-        window.location.reload(); // Reload current tab to reflect login
       }
     });
 
-    // Redirect if not logged in
     const isLoggedIn = localStorage.getItem('isLoggedIn');
     if (isLoggedIn !== 'true' && !window.location.href.includes('login.html')) {
       window.location.href = 'login.html';
     }
-  });
-</script>
-
+  </script>
 </body>
 </html>

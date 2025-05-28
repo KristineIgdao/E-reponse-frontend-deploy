@@ -202,7 +202,8 @@ header {
 
 .edit-btn,
 .save-btn,
-.cancel-btn {
+.cancel-btn,
+.logout-btn {
   background-color: #c9302c;
   color: white;
   border: none;
@@ -216,9 +217,11 @@ header {
 
 .edit-btn:hover,
 .save-btn:hover,
-.cancel-btn:hover {
+.cancel-btn:hover,
+.logout-btn:hover {
   background-color: #a82622;
 }
+
 
 /* Responsive */
 @media screen and (max-width: 600px) {
@@ -235,4 +238,7 @@ header {
   .profile-item input {
     width: 100%;
   }
+
+
 }
+
